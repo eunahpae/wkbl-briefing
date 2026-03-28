@@ -37,6 +37,13 @@ TEAM_CODES = {
     "KB스타즈":  "01",
 }
 
+# 팀명 유효성 검사용 (순위표에서 부제 포함 e.g. "삼성생명 블루밍스" 허용)
+KNOWN_TEAM_PREFIXES = list(TEAM_CODES.keys())
+
+
+def is_wkbl_team(name: str) -> bool:
+    return any(name.startswith(p) or p in name for p in KNOWN_TEAM_PREFIXES)
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -154,6 +161,11 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
         if not day_text.isdigit():
             continue
         day = day_text.zfill(2)
+        # 존재하지 않는 날짜(2/29, 2/30 등) 필터링
+        try:
+            datetime(int(year), int(month), int(day))
+        except ValueError:
+            continue
         date_str = f"{year}-{month}-{day}"
 
         # 이 날짜의 경기들 (여러 경기 가능)
@@ -175,6 +187,10 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
                 if m:
                     game_no = m.group(1)
 
+            # WKBL 6팀 경기만 포함 (다른 리그 경기 필터링)
+            if not is_wkbl_team(home_team) or not is_wkbl_team(away_team):
+                continue
+
             games.append({
                 "date": date_str,
                 "home_team": home_team,
@@ -191,11 +207,14 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
 
 
 def _fetch_month_schedule(session: requests.Session, ym: str) -> List[Dict]:
+    """GET 방식으로 전체 월 일정 수집
+    (POST /schedule1.asp 는 최근 경기만 표시하므로,
+     GET ?gun=1&season_gu=046&ym=YYYYMM&viewType=1 사용)
+    """
     year, month = ym[:4], ym[4:6]
-    url = f"{BASE_URL}/game/sch/schedule1.asp"
-    body = f"season_gu0={SEASON_CODE}&game_type0=&game_no0=&ym={ym}"
-    headers_post = {**HEADERS, "Content-Type": "application/x-www-form-urlencoded"}
-    r = session.post(url, data=body, headers=headers_post, timeout=15)
+    url = (f"{BASE_URL}/game/sch/schedule1.asp"
+           f"?gun=1&season_gu={SEASON_CODE}&ym={ym}&viewType=1")
+    r = session.get(url, timeout=15)
     r.raise_for_status()
     r.encoding = r.apparent_encoding or "utf-8"
     soup = BeautifulSoup(r.text, "lxml")
@@ -206,10 +225,23 @@ def collect_schedule(session: requests.Session) -> Optional[Dict]:
     out = DATA_DIR / "schedule.json"
     try:
         today = datetime.now(tz=KST)
+
+        # 시즌 시작(2025-10)부터 다음달까지 전체 수집 (h2h 완전성 확보)
+        season_start_ym = "202510"
         months = []
-        for delta in [-1, 0, 1]:  # 지난달, 이번달, 다음달
-            dt = (today.replace(day=1) + timedelta(days=32 * delta)).replace(day=1)
-            months.append(dt.strftime("%Y%m"))
+        cur = datetime(2025, 10, 1, tzinfo=KST)
+        next_month_dt = (today.replace(day=1).replace(
+            month=today.month % 12 + 1,
+            year=today.year + (1 if today.month == 12 else 0)
+        ))
+        while cur <= next_month_dt:
+            months.append(cur.strftime("%Y%m"))
+            # 다음달로 이동
+            m = cur.month + 1
+            y = cur.year
+            if m == 13:
+                m, y = 1, y + 1
+            cur = cur.replace(year=y, month=m, day=1)
 
         all_games = []
         for ym in months:
@@ -312,11 +344,19 @@ def _parse_h2h_ajax(soup: BeautifulSoup, game_no: str) -> Optional[Dict]:
     tbody = h2h_table.find("tbody") or h2h_table
     for tr in tbody.find_all("tr"):
         tds = tr.find_all("td")
-        if len(tds) < 3:
+        th_cells = tr.find_all("th")
+        # 구조: <td>왼쪽값</td><th>항목명</th><td>오른쪽값</td>
+        if len(tds) == 2 and len(th_cells) >= 1:
+            left_val  = tds[0].get_text(strip=True)
+            label     = th_cells[0].get_text(strip=True)
+            right_val = tds[1].get_text(strip=True)
+        elif len(tds) >= 3:
+            # 혹시 모두 TD인 경우 대비
+            left_val  = tds[0].get_text(strip=True)
+            label     = tds[1].get_text(strip=True)
+            right_val = tds[2].get_text(strip=True)
+        else:
             continue
-        left_val  = tds[0].get_text(strip=True)
-        label     = tds[1].get_text(strip=True)
-        right_val = tds[2].get_text(strip=True)
 
         if "올시즌성적" in label:
             parsed["season_record"] = {team_left: left_val, team_right: right_val}
