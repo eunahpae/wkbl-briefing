@@ -564,10 +564,17 @@ function buildModalContent(game, h2hData) {
     }
   }
 
-  // ── 액션 버튼 + 출처 ──
+  // ── 액션 버튼 + AI 출력 영역 + 출처 ──
   html += `<div class="modal-actions">
     <button class="modal-action-btn" onclick="copyBriefingText(this, false)">📋 데이터 텍스트 복사</button>
-    <button class="modal-action-btn accent" onclick="copyBriefingText(this, true)">✨ AI 스크립트 프롬프트 복사</button>
+    <button class="modal-action-btn accent" id="ai-generate-btn" onclick="handleAIGenerate(this)">✨ AI 해설 스크립트 생성</button>
+  </div>
+  <div id="ai-script-output" class="ai-script-output" style="display:none">
+    <div class="ai-script-header">
+      <span>✨ AI 해설 스크립트</span>
+      <button class="ai-copy-btn" onclick="copyAIScript(this)">복사</button>
+    </div>
+    <div id="ai-script-content" class="ai-script-content"></div>
   </div>
   <div class="modal-source">
     출처: <a href="https://www.wkbl.or.kr" target="_blank" rel="noopener noreferrer">wkbl.or.kr</a>
@@ -737,6 +744,117 @@ function buildAIPromptText(game, h2hData) {
 ━━━━━━━━ 경기 데이터 ━━━━━━━━
 
 ${dataText}`;
+}
+
+// ─── Claude API 직접 호출 ─────────────────────────────────────────────────────
+async function handleAIGenerate(btn) {
+  let apiKey = localStorage.getItem("claude_api_key");
+
+  if (!apiKey) {
+    const key = prompt(
+      "Claude API 키를 입력하세요.\n" +
+      "(브라우저 localStorage에만 저장됩니다)\n\n" +
+      "발급: https://console.anthropic.com/settings/keys"
+    );
+    if (!key || !key.trim()) return;
+    apiKey = key.trim();
+    localStorage.setItem("claude_api_key", apiKey);
+  }
+
+  await generateAIBriefing(btn, apiKey, _currentModalGame, _currentModalH2H);
+}
+
+async function generateAIBriefing(btn, apiKey, game, h2hData) {
+  const output  = document.getElementById("ai-script-output");
+  const content = document.getElementById("ai-script-content");
+
+  output.style.display = "block";
+  content.textContent  = "";
+  content.style.color  = "";
+  btn.disabled    = true;
+  btn.textContent = "⏳ 생성 중...";
+  output.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+  const promptText = buildAIPromptText(game, h2hData);
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "x-api-key":     apiKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
+      },
+      body: JSON.stringify({
+        model:      "claude-sonnet-4-6",
+        max_tokens: 2048,
+        stream:     true,
+        messages:   [{ role: "user", content: promptText }],
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        localStorage.removeItem("claude_api_key");
+        throw new Error("API 키가 올바르지 않습니다. 다시 시도하면 재입력 창이 열립니다.");
+      }
+      throw new Error(err.error?.message || `API 오류 (${res.status})`);
+    }
+
+    const reader  = res.body.getReader();
+    const decoder = new TextDecoder();
+    let text = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      for (const line of chunk.split("\n")) {
+        if (!line.startsWith("data: ")) continue;
+        const raw = line.slice(6).trim();
+        if (!raw || raw === "[DONE]") continue;
+        try {
+          const json = JSON.parse(raw);
+          if (json.type === "content_block_delta" && json.delta?.type === "text_delta") {
+            text += json.delta.text;
+            content.textContent = text;
+          }
+        } catch {}
+      }
+    }
+
+    btn.textContent = "✅ 생성 완료";
+    setTimeout(() => { btn.textContent = "✨ AI 해설 스크립트 생성"; btn.disabled = false; }, 3000);
+
+  } catch (e) {
+    content.style.color = "#f87171";
+    content.textContent = `오류: ${e.message}`;
+    btn.textContent = "✨ AI 해설 스크립트 생성";
+    btn.disabled = false;
+  }
+}
+
+function copyAIScript(btn) {
+  const text = document.getElementById("ai-script-content")?.textContent || "";
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ 복사됨!";
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
+}
+
+function showApiKeySettings() {
+  const cur = localStorage.getItem("claude_api_key");
+  const hint = cur ? `현재 키: ${cur.slice(0, 15)}...` : "(설정되지 않음)";
+  const key = prompt(`Claude API 키 설정\n${hint}\n\n새 키 입력 (비우면 삭제):`);
+  if (key === null) return;
+  if (key.trim()) {
+    localStorage.setItem("claude_api_key", key.trim());
+  } else {
+    localStorage.removeItem("claude_api_key");
+  }
 }
 
 // currentModal 에 저장된 game·h2h 참조

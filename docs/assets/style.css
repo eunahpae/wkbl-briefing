@@ -564,6 +564,70 @@ tr.section-separator td {
 .modal-action-btn.accent:hover { opacity: 0.85; }
 .modal-action-btn.accent:disabled { opacity: 0.5; }
 
+/* AI 스크립트 출력 영역 */
+.ai-script-output {
+  margin-top: 16px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ai-script-header {
+  background: rgba(240,180,41,0.1);
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(240,180,41,0.2);
+}
+
+.ai-copy-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ai-copy-btn:hover { background: rgba(240,180,41,0.15); }
+
+.ai-script-content {
+  padding: 16px 18px;
+  font-size: 13px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  color: var(--text);
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+/* API 키 버튼 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.api-key-btn {
+  background: var(--surf2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.api-key-btn:hover { color: var(--text); border-color: var(--accent); }
+
 .modal-source {
   margin-top: 12px;
   font-size: 11px;
