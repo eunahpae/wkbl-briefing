@@ -208,7 +208,11 @@ function renderScheduleTable(data) {
     html += `<td style="font-weight:600;border-left:3px solid ${awayColor}">${escHtml(g.away_team)}</td>`;
     html += `<td>${escHtml(g.venue || "-")}</td>`;
     html += `<td>${escHtml(g.broadcast || "-")}</td>`;
-    html += `<td class="game-no-link">${done ? "완료" : "예정"}</td>`;
+    if (done && g.home_score && g.away_score) {
+      html += `<td class="score-cell"><span style="color:${homeColor};font-weight:700">${escHtml(g.home_score)}</span><span style="color:var(--muted);margin:0 4px">:</span><span style="color:${awayColor};font-weight:700">${escHtml(g.away_score)}</span></td>`;
+    } else {
+      html += `<td class="game-no-link">${done ? "완료" : "예정"}</td>`;
+    }
     html += "</tr>";
   });
 
@@ -225,7 +229,8 @@ async function showBriefing(teamA, teamB) {
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
 
   // 가나다순 정렬로 파일명 결정
-  const [t1, t2] = [teamA, teamB].sort((a, b) => a.localeCompare(b, "ko"));
+  // Python sorted()와 동일한 유니코드 코드포인트 순 정렬 (locale 사용 시 한글이 영문 앞에 와서 파일명 불일치)
+  const [t1, t2] = [teamA, teamB].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   const filename = `${t1}_vs_${t2}.json`;
 
   try {

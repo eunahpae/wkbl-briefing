@@ -179,13 +179,20 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
             home_team = teams[0]
             away_team = teams[1]
 
-            # game_no: 경기결과 링크에서 추출
+            # game_no + 점수: 경기결과 링크에서 추출
             game_no = ""
+            home_score = ""
+            away_score = ""
             link = info_div.find("a", class_="txt_info")
             if link and link.get("href"):
                 m = re.search(r"game_no=(\d+)", link["href"])
                 if m:
                     game_no = m.group(1)
+                # [<em>77</em> vs <em>55</em>] 형태에서 점수 추출
+                ems = link.find_all("em")
+                if len(ems) >= 2:
+                    home_score = ems[0].get_text(strip=True)
+                    away_score = ems[1].get_text(strip=True)
 
             # WKBL 6팀 경기만 포함 (다른 리그 경기 필터링)
             if not is_wkbl_team(home_team) or not is_wkbl_team(away_team):
@@ -195,6 +202,8 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
                 "date": date_str,
                 "home_team": home_team,
                 "away_team": away_team,
+                "home_score": home_score,
+                "away_score": away_score,
                 "venue": "",
                 "time": "",
                 "broadcast": "",
