@@ -215,6 +215,62 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
     return games
 
 
+def _collect_game_details(session: requests.Session, games: List[Dict]) -> Dict[str, Dict]:
+    """result.asp?viewType=2 에서 장소, 시간, MVP 수집
+    반환: {game_no: {venue, time, mvp}}
+    """
+    result_map: Dict[str, Dict] = {}
+    for game in games:
+        game_no = game["game_no"]
+        ym = game["ym"]
+        try:
+            url = (f"{BASE_URL}/game/result.asp"
+                   f"?season_gu={SEASON_CODE}&gun=1&game_type=01"
+                   f"&game_no={game_no}&ym={ym}&viewType=2")
+            r = session.get(url, timeout=15)
+            r.encoding = r.apparent_encoding or "utf-8"
+            soup = BeautifulSoup(r.text, "lxml")
+
+            # 장소·시간: <p class="info_game"> 안의 span들
+            venue = ""
+            game_time = ""
+            info_p = soup.find("p", class_="info_game")
+            if info_p:
+                spans = info_p.find_all("span")
+                for sp in spans:
+                    txt = sp.get("data-kr") or sp.get_text(strip=True)
+                    if re.match(r"\d{2}:\d{2}", txt):
+                        game_time = txt
+                    elif txt and "체육관" in txt or "경기장" in txt or "아레나" in txt or "홀" in txt:
+                        venue = txt
+                # 장소를 못 잡은 경우 언어 스팬 전체 텍스트에서 재시도
+                if not venue:
+                    full = info_p.get_text(separator=" ", strip=True)
+                    m = re.search(r"(\S+(?:체육관|경기장|아레나|홀))", full)
+                    if m:
+                        venue = m.group(1)
+
+            # MVP: <div class="info_mvp">오늘의 MVP:김지영[신한은행 에스버드]</div>
+            mvp = ""
+            mvp_div = soup.find("div", class_="info_mvp")
+            if mvp_div:
+                mvp_text = mvp_div.get_text(strip=True)
+                m = re.search(r"MVP[:\s:]+(.+)", mvp_text)
+                if m:
+                    mvp = m.group(1).strip()
+                    # [팀명] → (팀명) 형식으로 정리
+                    mvp = re.sub(r"\[(.+?)\]", r"(\1)", mvp)
+
+            result_map[game_no] = {"venue": venue, "time": game_time, "mvp": mvp}
+            time.sleep(0.2)
+        except Exception as e:
+            print(f"[WARN] 경기상세 수집 실패 (game_no={game_no}): {e}")
+
+    filled = sum(1 for v in result_map.values() if v.get("venue") or v.get("mvp"))
+    print(f"  → 상세 수집 완료: {filled}/{len(games)}경기 장소/MVP 확보")
+    return result_map
+
+
 def _fetch_month_schedule(session: requests.Session, ym: str) -> List[Dict]:
     """GET 방식으로 전체 월 일정 수집
     (POST /schedule1.asp 는 최근 경기만 표시하므로,
@@ -261,6 +317,14 @@ def collect_schedule(session: requests.Session) -> Optional[Dict]:
                 time.sleep(0.5)
             except Exception as e:
                 print(f"[WARN] {ym} 일정 수집 실패: {e}")
+
+        # 완료된 경기마다 result.asp?viewType=2 에서 장소/시간/MVP 보강
+        completed_games = [g for g in all_games if g.get("is_completed") and g.get("game_no")]
+        print(f"  → 경기 상세(장소/시간/MVP) 수집: {len(completed_games)}경기")
+        details_map = _collect_game_details(session, completed_games)
+        for g in all_games:
+            if g.get("game_no") and g["game_no"] in details_map:
+                g.update(details_map[g["game_no"]])
 
         data = {"updated": now_kst(), "games": all_games}
         save_json(out, data)
@@ -430,19 +494,14 @@ def collect_h2h_results(session: requests.Session, schedule_data: Optional[Dict]
                 if parsed:
                     season_h2h_latest   = parsed["season_h2h"]   or season_h2h_latest
                     all_time_h2h_latest = parsed["all_time_h2h"] or all_time_h2h_latest
-                    enriched_games.append({
-                        "date":    game["date"],
-                        "venue":   game.get("venue", ""),
-                        "result":  parsed["season_record"],
-                        "game_no": game["game_no"],
-                    })
-                else:
-                    enriched_games.append({
-                        "date":    game["date"],
-                        "venue":   game.get("venue", ""),
-                        "result":  {},
-                        "game_no": game["game_no"],
-                    })
+
+                enriched_games.append({
+                    "date":    game["date"],
+                    "venue":   game.get("venue", ""),
+                    "time":    game.get("time", ""),
+                    "mvp":     game.get("mvp", ""),
+                    "game_no": game["game_no"],
+                })
 
                 time.sleep(0.3)
             except Exception as e:

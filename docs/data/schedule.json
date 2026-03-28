@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-28T09:55:19+09:00",
+  "updated": "2026-03-28T10:01:40+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -7,12 +7,13 @@
       "away_team": "신한은행",
       "home_score": "65",
       "away_score": "54",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:25",
       "broadcast": "",
       "game_no": "1",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "홍유순(신한은행 에스버드)"
     },
     {
       "date": "2025-11-17",
@@ -20,12 +21,13 @@
       "away_team": "우리은행",
       "home_score": "66",
       "away_score": "45",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "2",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-11-19",
@@ -33,12 +35,13 @@
       "away_team": "KB스타즈",
       "home_score": "61",
       "away_score": "82",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "3",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "강이슬(KB스타즈)"
     },
     {
       "date": "2025-11-21",
@@ -46,12 +49,13 @@
       "away_team": "하나은행",
       "home_score": "76",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:01",
       "broadcast": "",
       "game_no": "4",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "홍유순(신한은행 에스버드)"
     },
     {
       "date": "2025-11-22",
@@ -59,12 +63,13 @@
       "away_team": "삼성생명",
       "home_score": "44",
       "away_score": "63",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "5",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "배혜윤(삼성생명 블루밍스)"
     },
     {
       "date": "2025-11-22",
@@ -72,12 +77,13 @@
       "away_team": "BNK 썸",
       "home_score": "64",
       "away_score": "55",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "6",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2025-11-23",
@@ -85,12 +91,13 @@
       "away_team": "신한은행",
       "home_score": "75",
       "away_score": "51",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "7",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-11-24",
@@ -98,12 +105,13 @@
       "away_team": "하나은행",
       "home_score": "64",
       "away_score": "76",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "8",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2025-11-26",
@@ -111,12 +119,13 @@
       "away_team": "KB스타즈",
       "home_score": "61",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "9",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김진영(신한은행 에스버드)"
     },
     {
       "date": "2025-11-28",
@@ -124,12 +133,13 @@
       "away_team": "BNK 썸",
       "home_score": "45",
       "away_score": "54",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "10",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김소니아(BNK 썸)"
     },
     {
       "date": "2025-11-29",
@@ -137,12 +147,13 @@
       "away_team": "하나은행",
       "home_score": "57",
       "away_score": "67",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "11",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2025-11-29",
@@ -150,12 +161,13 @@
       "away_team": "삼성생명",
       "home_score": "58",
       "away_score": "65",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "12",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2025-11-30",
@@ -163,12 +175,13 @@
       "away_team": "우리은행",
       "home_score": "69",
       "away_score": "65",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "13",
       "ym": "202511",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-12-01",
@@ -176,12 +189,13 @@
       "away_team": "BNK 썸",
       "home_score": "60",
       "away_score": "49",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "14",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2025-12-03",
@@ -189,12 +203,13 @@
       "away_team": "삼성생명",
       "home_score": "72",
       "away_score": "67",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "15",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김소니아(BNK 썸)"
     },
     {
       "date": "2025-12-05",
@@ -202,12 +217,13 @@
       "away_team": "하나은행",
       "home_score": "62",
       "away_score": "71",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "16",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2025-12-06",
@@ -215,12 +231,13 @@
       "away_team": "BNK 썸",
       "home_score": "65",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "17",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2025-12-06",
@@ -228,12 +245,13 @@
       "away_team": "신한은행",
       "home_score": "53",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "18",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "홍유순(신한은행 에스버드)"
     },
     {
       "date": "2025-12-07",
@@ -241,12 +259,13 @@
       "away_team": "우리은행",
       "home_score": "59",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "19",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-12-08",
@@ -254,12 +273,13 @@
       "away_team": "신한은행",
       "home_score": "69",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "20",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김진영(신한은행 에스버드)"
     },
     {
       "date": "2025-12-10",
@@ -267,12 +287,13 @@
       "away_team": "KB스타즈",
       "home_score": "80",
       "away_score": "78",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "21",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "허예은(KB스타즈)"
     },
     {
       "date": "2025-12-12",
@@ -280,12 +301,13 @@
       "away_team": "KB스타즈",
       "home_score": "59",
       "away_score": "54",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "22",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-12-13",
@@ -293,12 +315,13 @@
       "away_team": "BNK 썸",
       "home_score": "61",
       "away_score": "63",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "23",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "신이슬(신한은행 에스버드)"
     },
     {
       "date": "2025-12-13",
@@ -306,12 +329,13 @@
       "away_team": "삼성생명",
       "home_score": "74",
       "away_score": "67",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "24",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2025-12-14",
@@ -319,12 +343,13 @@
       "away_team": "우리은행",
       "home_score": "44",
       "away_score": "47",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "25",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-12-15",
@@ -332,12 +357,13 @@
       "away_team": "삼성생명",
       "home_score": "66",
       "away_score": "55",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:01",
       "broadcast": "",
       "game_no": "26",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "허예은(KB스타즈)"
     },
     {
       "date": "2025-12-17",
@@ -345,12 +371,13 @@
       "away_team": "하나은행",
       "home_score": "69",
       "away_score": "66",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "27",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2025-12-19",
@@ -358,12 +385,13 @@
       "away_team": "우리은행",
       "home_score": "52",
       "away_score": "57",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "28",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "변하정(우리은행 우리WON)"
     },
     {
       "date": "2025-12-20",
@@ -371,12 +399,13 @@
       "away_team": "KB스타즈",
       "home_score": "46",
       "away_score": "70",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "29",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "강이슬(KB스타즈)"
     },
     {
       "date": "2025-12-20",
@@ -384,12 +413,13 @@
       "away_team": "신한은행",
       "home_score": "79",
       "away_score": "74",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "30",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2025-12-21",
@@ -397,12 +427,13 @@
       "away_team": "우리은행",
       "home_score": "61",
       "away_score": "53",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "31",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2025-12-22",
@@ -410,12 +441,13 @@
       "away_team": "KB스타즈",
       "home_score": "57",
       "away_score": "70",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "32",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2025-12-24",
@@ -423,12 +455,13 @@
       "away_team": "삼성생명",
       "home_score": "44",
       "away_score": "51",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "33",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "조수아(삼성생명 블루밍스)"
     },
     {
       "date": "2025-12-26",
@@ -436,12 +469,13 @@
       "away_team": "신한은행",
       "home_score": "64",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "34",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "최이샘(신한은행 에스버드)"
     },
     {
       "date": "2025-12-27",
@@ -449,12 +483,13 @@
       "away_team": "우리은행",
       "home_score": "66",
       "away_score": "68",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "35",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이민지(우리은행 우리WON)"
     },
     {
       "date": "2025-12-27",
@@ -462,12 +497,13 @@
       "away_team": "BNK 썸",
       "home_score": "55",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "36",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김소니아(BNK 썸)"
     },
     {
       "date": "2025-12-28",
@@ -475,12 +511,13 @@
       "away_team": "하나은행",
       "home_score": "72",
       "away_score": "81",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "37",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "허예은(KB스타즈)"
     },
     {
       "date": "2025-12-29",
@@ -488,12 +525,13 @@
       "away_team": "삼성생명",
       "home_score": "70",
       "away_score": "75",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "38",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "홍유순(신한은행 에스버드)"
     },
     {
       "date": "2025-12-31",
@@ -501,12 +539,13 @@
       "away_team": "BNK 썸",
       "home_score": "75",
       "away_score": "61",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "39",
       "ym": "202512",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-01-10",
@@ -514,12 +553,13 @@
       "away_team": "하나은행",
       "home_score": "57",
       "away_score": "75",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "40",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박소희(하나은행)"
     },
     {
       "date": "2026-01-10",
@@ -527,12 +567,13 @@
       "away_team": "BNK 썸",
       "home_score": "61",
       "away_score": "74",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "41",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김소니아(BNK 썸)"
     },
     {
       "date": "2026-01-11",
@@ -540,12 +581,13 @@
       "away_team": "KB스타즈",
       "home_score": "73",
       "away_score": "89",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "42",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-01-12",
@@ -553,12 +595,13 @@
       "away_team": "우리은행",
       "home_score": "55",
       "away_score": "70",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "43",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-01-14",
@@ -566,12 +609,13 @@
       "away_team": "하나은행",
       "home_score": "64",
       "away_score": "66",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "44",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2026-01-16",
@@ -579,12 +623,13 @@
       "away_team": "신한은행",
       "home_score": "88",
       "away_score": "77",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:30",
       "broadcast": "",
       "game_no": "45",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "강이슬(KB스타즈)"
     },
     {
       "date": "2026-01-17",
@@ -592,12 +637,13 @@
       "away_team": "삼성생명",
       "home_score": "54",
       "away_score": "50",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "46",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박혜진(BNK 썸)"
     },
     {
       "date": "2026-01-17",
@@ -605,12 +651,13 @@
       "away_team": "하나은행",
       "home_score": "51",
       "away_score": "63",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "47",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2026-01-18",
@@ -618,12 +665,13 @@
       "away_team": "신한은행",
       "home_score": "79",
       "away_score": "85",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "48",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "미마 루이(신한은행 에스버드)"
     },
     {
       "date": "2026-01-19",
@@ -631,12 +679,13 @@
       "away_team": "삼성생명",
       "home_score": "61",
       "away_score": "74",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "49",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2026-01-21",
@@ -644,12 +693,13 @@
       "away_team": "우리은행",
       "home_score": "65",
       "away_score": "63",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "50",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김소니아(BNK 썸)"
     },
     {
       "date": "2026-01-23",
@@ -657,12 +707,13 @@
       "away_team": "BNK 썸",
       "home_score": "85",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "51",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "강이슬(KB스타즈)"
     },
     {
       "date": "2026-01-24",
@@ -670,12 +721,13 @@
       "away_team": "삼성생명",
       "home_score": "60",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "52",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2026-01-24",
@@ -683,12 +735,13 @@
       "away_team": "신한은행",
       "home_score": "60",
       "away_score": "56",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "53",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "신이슬(신한은행 에스버드)"
     },
     {
       "date": "2026-01-25",
@@ -696,12 +749,13 @@
       "away_team": "KB스타즈",
       "home_score": "75",
       "away_score": "87",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "54",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2026-01-26",
@@ -709,12 +763,13 @@
       "away_team": "신한은행",
       "home_score": "60",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "55",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2026-01-28",
@@ -722,12 +777,13 @@
       "away_team": "KB스타즈",
       "home_score": "70",
       "away_score": "75",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "56",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-01-30",
@@ -735,12 +791,13 @@
       "away_team": "BNK 썸",
       "home_score": "67",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "57",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박혜진(BNK 썸)"
     },
     {
       "date": "2026-01-31",
@@ -748,12 +805,13 @@
       "away_team": "KB스타즈",
       "home_score": "66",
       "away_score": "76",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "14:01",
       "broadcast": "",
       "game_no": "58",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-01-31",
@@ -761,12 +819,13 @@
       "away_team": "우리은행",
       "home_score": "45",
       "away_score": "78",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "59",
       "ym": "202601",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-02-01",
@@ -774,12 +833,13 @@
       "away_team": "하나은행",
       "home_score": "43",
       "away_score": "76",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "60",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2026-02-02",
@@ -787,12 +847,13 @@
       "away_team": "BNK 썸",
       "home_score": "73",
       "away_score": "65",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "61",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-02-04",
@@ -800,12 +861,13 @@
       "away_team": "하나은행",
       "home_score": "74",
       "away_score": "54",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "62",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2026-02-06",
@@ -813,12 +875,13 @@
       "away_team": "우리은행",
       "home_score": "78",
       "away_score": "71",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "63",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-02-07",
@@ -826,12 +889,13 @@
       "away_team": "하나은행",
       "home_score": "54",
       "away_score": "62",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "64",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2026-02-07",
@@ -839,12 +903,13 @@
       "away_team": "삼성생명",
       "home_score": "55",
       "away_score": "69",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "65",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "최이샘(신한은행 에스버드)"
     },
     {
       "date": "2026-02-08",
@@ -852,12 +917,13 @@
       "away_team": "우리은행",
       "home_score": "57",
       "away_score": "63",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "66",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-02-09",
@@ -865,12 +931,13 @@
       "away_team": "KB스타즈",
       "home_score": "65",
       "away_score": "68",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "67",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "허예은(KB스타즈)"
     },
     {
       "date": "2026-02-11",
@@ -878,12 +945,13 @@
       "away_team": "우리은행",
       "home_score": "65",
       "away_score": "69",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "68",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-02-13",
@@ -891,12 +959,13 @@
       "away_team": "BNK 썸",
       "home_score": "51",
       "away_score": "56",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "69",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "배혜윤(삼성생명 블루밍스)"
     },
     {
       "date": "2026-02-14",
@@ -904,12 +973,13 @@
       "away_team": "하나은행",
       "home_score": "45",
       "away_score": "71",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "70",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2026-02-14",
@@ -917,12 +987,13 @@
       "away_team": "신한은행",
       "home_score": "73",
       "away_score": "78",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "71",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-02-15",
@@ -930,12 +1001,13 @@
       "away_team": "삼성생명",
       "home_score": "56",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "72",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-02-16",
@@ -943,12 +1015,13 @@
       "away_team": "BNK 썸",
       "home_score": "55",
       "away_score": "58",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "73",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "신지현(신한은행 에스버드)"
     },
     {
       "date": "2026-02-18",
@@ -956,12 +1029,13 @@
       "away_team": "KB스타즈",
       "home_score": "73",
       "away_score": "74",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "74",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2026-02-20",
@@ -969,12 +1043,13 @@
       "away_team": "신한은행",
       "home_score": "37",
       "away_score": "52",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "75",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "신이슬(신한은행 에스버드)"
     },
     {
       "date": "2026-02-21",
@@ -982,12 +1057,13 @@
       "away_team": "삼성생명",
       "home_score": "73",
       "away_score": "76",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "76",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이주연(삼성생명 블루밍스)"
     },
     {
       "date": "2026-02-21",
@@ -995,12 +1071,13 @@
       "away_team": "KB스타즈",
       "home_score": "68",
       "away_score": "70",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "16:00",
       "broadcast": "",
       "game_no": "77",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-02-22",
@@ -1008,12 +1085,13 @@
       "away_team": "신한은행",
       "home_score": "68",
       "away_score": "71",
-      "venue": "",
-      "time": "",
+      "venue": "부산사직실내체육관",
+      "time": "14:00",
       "broadcast": "",
       "game_no": "78",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "안혜지(BNK 썸)"
     },
     {
       "date": "2026-02-23",
@@ -1021,12 +1099,13 @@
       "away_team": "하나은행",
       "home_score": "72",
       "away_score": "61",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "79",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "진안(하나은행)"
     },
     {
       "date": "2026-02-25",
@@ -1034,12 +1113,13 @@
       "away_team": "BNK 썸",
       "home_score": "56",
       "away_score": "66",
-      "venue": "",
-      "time": "",
+      "venue": "아산이순신체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "80",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "안혜지(BNK 썸)"
     },
     {
       "date": "2026-02-27",
@@ -1047,12 +1127,13 @@
       "away_team": "신한은행",
       "home_score": "59",
       "away_score": "50",
-      "venue": "",
-      "time": "",
+      "venue": "용인실내체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "81",
       "ym": "202602",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "이해란(삼성생명 블루밍스)"
     },
     {
       "date": "2026-03-23",
@@ -1060,12 +1141,13 @@
       "away_team": "KB스타즈",
       "home_score": "77",
       "away_score": "55",
-      "venue": "",
-      "time": "",
+      "venue": "인천도원체육관",
+      "time": "19:01",
       "broadcast": "",
       "game_no": "82",
       "ym": "202603",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김지영(신한은행 에스버드)"
     },
     {
       "date": "2026-03-25",
@@ -1073,12 +1155,13 @@
       "away_team": "우리은행",
       "home_score": "53",
       "away_score": "51",
-      "venue": "",
-      "time": "",
+      "venue": "부천체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "83",
       "ym": "202603",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-03-27",
@@ -1086,12 +1169,13 @@
       "away_team": "삼성생명",
       "home_score": "69",
       "away_score": "52",
-      "venue": "",
-      "time": "",
+      "venue": "청주체육관",
+      "time": "19:00",
       "broadcast": "",
       "game_no": "84",
       "ym": "202603",
-      "is_completed": true
+      "is_completed": true,
+      "mvp": "허예은(KB스타즈)"
     },
     {
       "date": "2026-03-28",

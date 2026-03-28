@@ -325,7 +325,6 @@ function renderBriefingPanel(teamA, teamB, h2hData) {
       let scoreHtml = "-";
       let scoreA = "-", scoreB = "-";
       if (sc) {
-        // home_team 기준으로 teamA/teamB 점수 배분
         const isHomeA = sc.home_team === teamA || (sc.home_team && teamA.startsWith(sc.home_team)) || (sc.home_team && sc.home_team.startsWith(teamA));
         scoreA = isHomeA ? sc.home : sc.away;
         scoreB = isHomeA ? sc.away : sc.home;
@@ -334,13 +333,14 @@ function renderBriefingPanel(teamA, teamB, h2hData) {
                   + `<span style="color:var(--muted);margin:0 4px">:</span>`
                   + `<span style="font-weight:700;color:${!winA ? colorB : 'var(--muted)'};">${escHtml(scoreB)}</span>`;
       }
+      const venueTime = [g.time, g.venue].filter(Boolean).join(" ");
       html += `<tr>
         <td>${escHtml(formatDate(g.date))}</td>
-        <td>${escHtml(g.venue || "-")}</td>
+        <td style="color:var(--muted);font-size:12px">${escHtml(venueTime || "-")}</td>
         <td style="color:${colorA};font-weight:600">${sc ? (parseInt(scoreA) > parseInt(scoreB) ? "승" : "패") : "-"}</td>
         <td>${scoreHtml}</td>
         <td style="color:${colorB};font-weight:600">${sc ? (parseInt(scoreB) > parseInt(scoreA) ? "승" : "패") : "-"}</td>
-        <td>${escHtml(g.mvp || "-")}</td>
+        <td style="font-size:12px">${escHtml(g.mvp || "-")}</td>
       </tr>`;
     });
 
