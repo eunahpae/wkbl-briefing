@@ -1,0 +1,340 @@
+:root {
+  --bg: #0a0a0f;
+  --surf: #13131a;
+  --surf2: #1c1c26;
+  --border: #2a2a3a;
+  --text: #e8e8f0;
+  --muted: #666680;
+  --accent: #f0b429;
+
+  --team-kb: #1E3A8A;
+  --team-hana: #00704A;
+  --team-samsung: #C8102E;
+  --team-bnk: #E85D04;
+  --team-woori: #004EA2;
+  --team-shinhan: #E8192C;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── 레이아웃 ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ── 헤더 ── */
+header {
+  background: var(--surf);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.header-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── 섹션 ── */
+.section {
+  padding: 24px 0;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── 카드 ── */
+.card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* ── 팀 선택 섹션 ── */
+.team-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.vs-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 0 4px;
+}
+
+select {
+  background: var(--surf2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 130px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666680' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn-briefing {
+  background: var(--accent);
+  color: #0a0a0f;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-briefing:hover { opacity: 0.85; }
+.btn-briefing:disabled {
+  background: var(--border);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+/* ── 테이블 공통 ── */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 9px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+th {
+  background: var(--surf2);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td { background: rgba(255,255,255,0.03); }
+
+/* 강조 행 (선택된 팀) */
+tr.highlight-a td { border-left: 3px solid var(--highlight-a, var(--accent)); }
+tr.highlight-b td { border-left: 3px solid var(--highlight-b, var(--muted)); }
+
+/* ── 순위 테이블 특수 컬럼 ── */
+td.rank { font-weight: 700; font-size: 15px; }
+td.team-name { font-weight: 600; text-align: left; }
+
+/* ── LAST5 뱃지 ── */
+.badge-wrap { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; }
+
+.badge {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.badge-w { background: #16a34a; color: #fff; }
+.badge-l { background: #dc2626; color: #fff; }
+
+/* ── 브리핑 패널 ── */
+#briefing-panel { display: none; }
+#briefing-panel.visible { display: block; }
+
+.matchup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.team-color-bar {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+}
+
+.team-name-big {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.team-stat-line {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.vs-big {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.h2h-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.h2h-stat-card {
+  background: var(--surf2);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.h2h-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.h2h-stat-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.briefing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* ── 일정 테이블 ── */
+.schedule-section {
+  padding: 24px 0 40px;
+}
+
+td.completed { color: var(--muted); }
+td.game-no-link a { color: var(--accent); }
+
+/* ── 로딩 / 에러 ── */
+.loading {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 16px 0;
+}
+
+.error-msg {
+  color: #f87171;
+  font-size: 13px;
+  padding: 16px 0;
+}
+
+/* ── 반응형 (모바일 768px 이하) ── */
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .team-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vs-label { text-align: center; }
+
+  select { width: 100%; }
+
+  .btn-briefing { width: 100%; text-align: center; }
+
+  .h2h-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .briefing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .matchup-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  th, td {
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+}

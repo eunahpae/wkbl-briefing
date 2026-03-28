@@ -1,0 +1,55 @@
+name: WKBL 데이터 자동 업데이트
+
+on:
+  schedule:
+    - cron: '0 0 * * *'    # 매일 00:00 UTC = 09:00 KST
+  workflow_dispatch:         # 수동 실행 버튼도 제공
+
+permissions:
+  contents: write            # 파일 커밋 권한
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: WKBL 데이터 수집
+        run: python scripts/scrape.py
+
+      - name: 수집 데이터 검수
+        id: validate
+        run: |
+          python scripts/validate.py
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+        # 오류(exit 2)가 있어도 다음 단계에서 처리하도록 계속 진행
+        continue-on-error: true
+
+      - name: 검수 결과 확인
+        run: |
+          CODE="${{ steps.validate.outputs.exit_code }}"
+          if [ "$CODE" = "2" ]; then
+            echo "::error::데이터 검수 실패 - 오류가 발견되어 커밋을 중단합니다."
+            exit 1
+          elif [ "$CODE" = "1" ]; then
+            echo "::warning::데이터 검수 경고 - 경고가 있지만 커밋을 진행합니다."
+          else
+            echo "데이터 검수 통과"
+          fi
+
+      - name: 변경사항 커밋 & 푸시
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/
+          git diff --staged --quiet || git commit -m "chore: WKBL 데이터 자동 업데이트 $(date +'%Y-%m-%d %H:%M KST')"
+          git push

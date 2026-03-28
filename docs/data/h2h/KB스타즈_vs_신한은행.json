@@ -1,0 +1,27 @@
+{
+  "updated": "2026-03-28T09:35:35+09:00",
+  "team_a": "KB스타즈",
+  "team_b": "신한은행",
+  "season_h2h": {},
+  "all_time_h2h": {},
+  "games": [
+    {
+      "date": "2026-01-23",
+      "venue": "",
+      "result": {},
+      "game_no": "82"
+    },
+    {
+      "date": "2026-03-23",
+      "venue": "",
+      "result": {},
+      "game_no": "82"
+    },
+    {
+      "date": "2026-04-23",
+      "venue": "",
+      "result": {},
+      "game_no": "82"
+    }
+  ]
+}
