@@ -37,6 +37,16 @@ TEAM_CODES = {
     "KB스타즈":  "01",
 }
 
+# 홈경기장 (WKBL 사이트가 미래 경기 장소를 노출하지 않아 정적 매핑으로 대응)
+TEAM_HOME_VENUES = {
+    "삼성생명": "용인실내체육관",
+    "신한은행": "인천도원체육관",
+    "우리은행": "아산이순신체육관",
+    "하나은행": "부천체육관",
+    "BNK 썸":   "부산사직실내체육관",
+    "KB스타즈":  "청주체육관",
+}
+
 # 팀명 유효성 검사용 (순위표에서 부제 포함 e.g. "삼성생명 블루밍스" 허용)
 KNOWN_TEAM_PREFIXES = list(TEAM_CODES.keys())
 
@@ -198,13 +208,17 @@ def _parse_calendar_games(soup: BeautifulSoup, year: str, month: str, ym: str) -
             if not is_wkbl_team(home_team) or not is_wkbl_team(away_team):
                 continue
 
+            # 미완료 경기는 홈팀 기준 홈구장으로 장소 채움
+            # (WKBL 사이트가 미래 경기 장소를 HTML에 노출하지 않음)
+            default_venue = "" if game_no else TEAM_HOME_VENUES.get(home_team, "")
+
             games.append({
                 "date": date_str,
                 "home_team": home_team,
                 "away_team": away_team,
                 "home_score": home_score,
                 "away_score": away_score,
-                "venue": "",
+                "venue": default_venue,
                 "time": "",
                 "broadcast": "",
                 "game_no": game_no,
@@ -271,6 +285,47 @@ def _collect_game_details(session: requests.Session, games: List[Dict]) -> Dict[
     return result_map
 
 
+def _fetch_month_list(session: requests.Session, ym: str) -> Dict[str, Dict]:
+    """리스트 뷰(inc_list_1_new.asp)에서 장소·시간 수집
+    반환: {"YYYY-MM-DD|홈팀|원정팀": {"venue": ..., "time": ...}}
+    """
+    url = (f"{BASE_URL}/game/sch/inc_list_1_new.asp"
+           f"?season_gu={SEASON_CODE}&ym={ym}&viewType=2&gun=1")
+    r = session.get(url, timeout=15)
+    r.raise_for_status()
+    r.encoding = r.apparent_encoding or "utf-8"
+    soup = BeautifulSoup(r.text, "lxml")
+
+    info: Dict[str, Dict] = {}
+    for tr in soup.select("tbody tr"):
+        # tr id 형식: "20260328"
+        tr_id = tr.get("id", "")
+        if not re.match(r"^\d{8}$", tr_id):
+            continue
+        date_str = f"{tr_id[:4]}-{tr_id[4:6]}-{tr_id[6:8]}"
+
+        tds = tr.find_all("td")
+        if len(tds) < 4:
+            continue
+
+        # 팀명: .team_name[data-kr] 순서대로 [원정팀, 홈팀] (사이트에서 away가 먼저)
+        team_els = tr.select(".team_name")
+        teams = [el.get("data-kr", el.get_text(strip=True)) for el in team_els]
+        teams = [t for t in teams if t and is_wkbl_team(t)]
+        if len(teams) < 2:
+            continue
+        # 팀 정렬 기준 키 (리스트 뷰의 away/home 클래스가 달력과 반대인 경우 있음)
+        sorted_teams = sorted(teams)
+
+        venue = tds[2].get("data-kr") or tds[2].get_text(strip=True)
+        game_time = tds[3].get_text(strip=True)
+
+        key = f"{date_str}|{sorted_teams[0]}|{sorted_teams[1]}"
+        info[key] = {"venue": venue, "time": game_time}
+
+    return info
+
+
 def _fetch_month_schedule(session: requests.Session, ym: str) -> List[Dict]:
     """GET 방식으로 전체 월 일정 수집
     (POST /schedule1.asp 는 최근 경기만 표시하므로,
@@ -309,14 +364,32 @@ def collect_schedule(session: requests.Session) -> Optional[Dict]:
             cur = cur.replace(year=y, month=m, day=1)
 
         all_games = []
+        list_info: Dict[str, Dict] = {}  # 리스트 뷰의 장소/시간 정보
         for ym in months:
             try:
                 games = _fetch_month_schedule(session, ym)
                 all_games.extend(games)
                 print(f"  → {ym}: {len(games)}경기")
+                # 리스트 뷰에서 장소/시간 수집 (미래 경기 포함)
+                try:
+                    list_info.update(_fetch_month_list(session, ym))
+                except Exception as e2:
+                    print(f"[WARN] {ym} 리스트 뷰 수집 실패: {e2}")
                 time.sleep(0.5)
             except Exception as e:
                 print(f"[WARN] {ym} 일정 수집 실패: {e}")
+
+        # 미완료 경기: 리스트 뷰에서 장소/시간 보강 (팀 정렬 기준 키 사용)
+        for g in all_games:
+            if not g.get("is_completed"):
+                st = sorted([g["home_team"], g["away_team"]])
+                key = f"{g['date']}|{st[0]}|{st[1]}"
+                info = list_info.get(key)
+                if info:
+                    if info.get("venue"):
+                        g["venue"] = info["venue"]
+                    if info.get("time"):
+                        g["time"] = info["time"]
 
         # 완료된 경기마다 result.asp?viewType=2 에서 장소/시간/MVP 보강
         completed_games = [g for g in all_games if g.get("is_completed") and g.get("game_no")]
