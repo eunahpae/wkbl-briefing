@@ -302,21 +302,44 @@ function renderBriefingPanel(teamA, teamB, h2hData) {
     </div>
   </div>`;
 
+  // schedule.json에서 game_no로 실제 점수 조회
+  const scoreByGameNo = {};
+  if (scheduleData) {
+    scheduleData.games.forEach(sg => {
+      if (sg.game_no && sg.home_score && sg.away_score) {
+        scoreByGameNo[sg.game_no] = { home_team: sg.home_team, home: sg.home_score, away: sg.away_score };
+      }
+    });
+  }
+
   // 맞대결 경기 기록
   const games = h2hData.games || [];
   if (games.length) {
     html += `<h3 style="font-size:13px;color:var(--muted);margin-bottom:10px;">이번 시즌 맞대결 기록</h3>
       <div class="table-wrap"><table><thead><tr>
-        <th>날짜</th><th>장소</th><th>${escHtml(teamA)}</th><th>${escHtml(teamB)}</th><th>MVP</th>
+        <th>날짜</th><th>장소</th><th>${escHtml(teamA)}</th><th>점수</th><th>${escHtml(teamB)}</th><th>MVP</th>
       </tr></thead><tbody>`;
 
     games.slice().reverse().forEach(g => {
-      const result = g.result || {};
+      const sc = scoreByGameNo[g.game_no];
+      let scoreHtml = "-";
+      let scoreA = "-", scoreB = "-";
+      if (sc) {
+        // home_team 기준으로 teamA/teamB 점수 배분
+        const isHomeA = sc.home_team === teamA || (sc.home_team && teamA.startsWith(sc.home_team)) || (sc.home_team && sc.home_team.startsWith(teamA));
+        scoreA = isHomeA ? sc.home : sc.away;
+        scoreB = isHomeA ? sc.away : sc.home;
+        const winA = parseInt(scoreA) > parseInt(scoreB);
+        scoreHtml = `<span style="font-weight:700;color:${winA ? colorA : 'var(--muted)'};">${escHtml(scoreA)}</span>`
+                  + `<span style="color:var(--muted);margin:0 4px">:</span>`
+                  + `<span style="font-weight:700;color:${!winA ? colorB : 'var(--muted)'};">${escHtml(scoreB)}</span>`;
+      }
       html += `<tr>
         <td>${escHtml(formatDate(g.date))}</td>
         <td>${escHtml(g.venue || "-")}</td>
-        <td style="color:${colorA}">${escHtml(result[teamA] || "-")}</td>
-        <td style="color:${colorB}">${escHtml(result[teamB] || "-")}</td>
+        <td style="color:${colorA};font-weight:600">${sc ? (parseInt(scoreA) > parseInt(scoreB) ? "승" : "패") : "-"}</td>
+        <td>${scoreHtml}</td>
+        <td style="color:${colorB};font-weight:600">${sc ? (parseInt(scoreB) > parseInt(scoreA) ? "승" : "패") : "-"}</td>
         <td>${escHtml(g.mvp || "-")}</td>
       </tr>`;
     });
