@@ -79,12 +79,14 @@ function getStandingRow(teamName) {
   return standingsData.rows.find(r => normalizeTeam(r[1]) === canon) || null;
 }
 
-function getRecentGames(teamName, n = 3) {
+function getRecentGames(teamName, n = 3, beforeDate = null) {
+  // beforeDate: 이 날짜보다 이전 경기만 (해당 게임 직전 컨디션 파악용)
   if (!scheduleData) return [];
   const canon = normalizeTeam(teamName);
   return scheduleData.games
     .filter(g => g.is_completed &&
-      (normalizeTeam(g.home_team) === canon || normalizeTeam(g.away_team) === canon))
+      (normalizeTeam(g.home_team) === canon || normalizeTeam(g.away_team) === canon) &&
+      (!beforeDate || g.date < beforeDate))
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, n);
 }
@@ -328,6 +330,9 @@ async function openGameModal(game) {
     console.warn("H2H 데이터 없음:", filename);
   }
 
+  // 텍스트 복사 버튼용 참조 저장
+  _currentModalGame = game;
+  _currentModalH2H  = h2hData;
   content.innerHTML = buildModalContent(game, h2hData);
 }
 
@@ -338,14 +343,23 @@ function closeGameModal() {
 }
 
 function buildModalContent(game, h2hData) {
-  const homeTeam = game.home_team;
-  const awayTeam = game.away_team;
-  const colorH   = getTeamColor(homeTeam);
-  const colorA   = getTeamColor(awayTeam);
-  const done     = game.is_completed;
+  const homeTeam   = normalizeTeam(game.home_team);
+  const awayTeam   = normalizeTeam(game.away_team);
+  const colorH     = getTeamColor(homeTeam);
+  const colorA     = getTeamColor(awayTeam);
+  const done       = game.is_completed;
+  const cutoffDate = game.date;  // 이 날짜까지 기준
 
   const homeRow  = getStandingRow(homeTeam);
   const awayRow  = getStandingRow(awayTeam);
+
+  // 점수 조회 맵 (game_no → schedule game)
+  const scoreByGameNo = {};
+  if (scheduleData) {
+    scheduleData.games.forEach(sg => {
+      if (sg.game_no && sg.home_score && sg.away_score) scoreByGameNo[sg.game_no] = sg;
+    });
+  }
 
   // ── 헤더 ──
   let html = `<div class="modal-header">
@@ -395,20 +409,39 @@ function buildModalContent(game, h2hData) {
     </div>
   </div>`;
 
-  // ── 상대전적 ──
+  // ── 상대전적 (cutoffDate 이하 경기 기준으로 재계산) ──
   if (h2hData) {
-    const seasonH2H  = h2hData.season_h2h  || {};
     const allTimeH2H = h2hData.all_time_h2h || {};
 
+    // 이 경기 날짜까지의 맞대결만 필터
+    const h2hGames = (h2hData.games || []).filter(g => g.date <= cutoffDate);
+
+    // 시즌 전적을 실제 점수 기반으로 재계산
+    let homeWins = 0, awayWins = 0;
+    h2hGames.forEach(g => {
+      const sc = scoreByGameNo[g.game_no];
+      if (!sc) return;
+      const isHomeH = normalizeTeam(sc.home_team) === homeTeam;
+      const hScore  = parseInt(isHomeH ? sc.home_score : sc.away_score);
+      const aScore  = parseInt(isHomeH ? sc.away_score : sc.home_score);
+      if (!isNaN(hScore) && !isNaN(aScore)) {
+        if (hScore > aScore) homeWins++; else awayWins++;
+      }
+    });
+    const totalPlayed = homeWins + awayWins;
+    const computedH2H = totalPlayed > 0
+      ? { [homeTeam]: `${homeWins}승 ${awayWins}패`, [awayTeam]: `${awayWins}승 ${homeWins}패` }
+      : { [homeTeam]: "-", [awayTeam]: "-" };
+
     html += `<div class="modal-section">
-      <div class="modal-section-title">상대전적</div>
+      <div class="modal-section-title">상대전적${cutoffDate ? ` (${cutoffDate} 기준)` : ""}</div>
       <div class="modal-h2h-row">
         <div class="modal-h2h-item">
           <div class="mh-label">시즌 상대전적</div>
           <div class="mh-val">
-            <span style="color:${colorH}">${escHtml(seasonH2H[homeTeam] || "-")}</span>
+            <span style="color:${colorH}">${escHtml(computedH2H[homeTeam])}</span>
             <span style="color:var(--muted)"> / </span>
-            <span style="color:${colorA}">${escHtml(seasonH2H[awayTeam] || "-")}</span>
+            <span style="color:${colorA}">${escHtml(computedH2H[awayTeam])}</span>
           </div>
         </div>
         <div class="modal-h2h-item">
@@ -422,18 +455,8 @@ function buildModalContent(game, h2hData) {
       </div>
     </div>`;
 
-    // 이번 시즌 맞대결 기록
-    const h2hGames = h2hData.games || [];
+    // 이번 시즌 맞대결 기록 (cutoffDate 이하)
     if (h2hGames.length) {
-      const scoreByGameNo = {};
-      if (scheduleData) {
-        scheduleData.games.forEach(sg => {
-          if (sg.game_no && sg.home_score && sg.away_score) {
-            scoreByGameNo[sg.game_no] = sg;
-          }
-        });
-      }
-
       html += `<div class="modal-section">
         <div class="modal-section-title">이번 시즌 맞대결 기록</div>
         <div class="table-wrap"><table><thead><tr>
@@ -449,7 +472,7 @@ function buildModalContent(game, h2hData) {
         let scoreHtml = "-";
         let homeResult = "-", awayResult = "-";
         if (sc) {
-          const isHomeH = normalizeTeam(sc.home_team) === normalizeTeam(homeTeam);
+          const isHomeH = normalizeTeam(sc.home_team) === homeTeam;
           const hScore = isHomeH ? sc.home_score : sc.away_score;
           const aScore = isHomeH ? sc.away_score : sc.home_score;
           const hWin = parseInt(hScore) > parseInt(aScore);
@@ -472,9 +495,9 @@ function buildModalContent(game, h2hData) {
     }
   }
 
-  // ── 최근 3경기 ──
-  const homeRecent = getRecentGames(homeTeam, 3);
-  const awayRecent = getRecentGames(awayTeam, 3);
+  // ── 최근 3경기 (이 경기 이전 경기만) ──
+  const homeRecent = getRecentGames(homeTeam, 3, cutoffDate);
+  const awayRecent = getRecentGames(awayTeam, 3, cutoffDate);
   if (homeRecent.length || awayRecent.length) {
     const buildRecentTable = (teamName, recentGames, color) => {
       let t = `<div class="modal-recent-col">
@@ -541,12 +564,210 @@ function buildModalContent(game, h2hData) {
     }
   }
 
-  // ── 출처 ──
-  html += `<div class="modal-source">
+  // ── 액션 버튼 + 출처 ──
+  html += `<div class="modal-actions">
+    <button class="modal-action-btn" onclick="copyBriefingText(this, false)">📋 데이터 텍스트 복사</button>
+    <button class="modal-action-btn accent" onclick="copyBriefingText(this, true)">✨ AI 스크립트 프롬프트 복사</button>
+  </div>
+  <div class="modal-source">
     출처: <a href="https://www.wkbl.or.kr" target="_blank" rel="noopener noreferrer">wkbl.or.kr</a>
   </div>`;
 
   return html;
+}
+
+// ─── 브리핑 텍스트 / AI 프롬프트 생성 ────────────────────────────────────────
+function buildBriefingPlainText(game, h2hData) {
+  const homeTeam   = normalizeTeam(game.home_team);
+  const awayTeam   = normalizeTeam(game.away_team);
+  const homeRow    = getStandingRow(homeTeam);
+  const awayRow    = getStandingRow(awayTeam);
+  const done       = game.is_completed;
+  const cutoffDate = game.date;
+
+  // 점수 조회 맵
+  const scoreByGameNo = {};
+  if (scheduleData) {
+    scheduleData.games.forEach(sg => {
+      if (sg.game_no && sg.home_score && sg.away_score) scoreByGameNo[sg.game_no] = sg;
+    });
+  }
+
+  const lines = [];
+  lines.push("══════════════════════════════════════════");
+  lines.push(`■ ${done ? "경기 결과" : "경기 프리뷰"}: ${homeTeam} vs ${awayTeam}`);
+  lines.push("══════════════════════════════════════════");
+  lines.push("");
+  lines.push("[경기 정보]");
+  lines.push(`• 일시: ${formatFullDate(game.date)}${game.time ? " " + game.time : ""}`);
+  if (game.venue) lines.push(`• 장소: ${game.venue}`);
+
+  lines.push("");
+  lines.push("[현재 순위]");
+  if (homeRow) lines.push(`• ${homeTeam} (홈): ${homeRow[0]}위 ${homeRow[3] || ""} | LAST5: ${homeRow[9] || "-"} | 연속: ${homeRow[10] || "-"}`);
+  if (awayRow) lines.push(`• ${awayTeam} (원정): ${awayRow[0]}위 ${awayRow[3] || ""} | LAST5: ${awayRow[9] || "-"} | 연속: ${awayRow[10] || "-"}`);
+
+  if (done && game.home_score && game.away_score) {
+    lines.push("");
+    lines.push("[경기 결과]");
+    lines.push(`• ${homeTeam} ${game.home_score} : ${game.away_score} ${awayTeam}`);
+    if (game.mvp) lines.push(`• MVP: ${game.mvp}`);
+  }
+
+  if (h2hData) {
+    const allTimeH2H = h2hData.all_time_h2h || {};
+    // cutoffDate 이하 맞대결만 필터 후 시즌 전적 재계산
+    const h2hGames = (h2hData.games || []).filter(g => g.date <= cutoffDate);
+    let homeWins = 0, awayWins = 0;
+    h2hGames.forEach(g => {
+      const sc = scoreByGameNo[g.game_no];
+      if (!sc) return;
+      const isHomeH = normalizeTeam(sc.home_team) === homeTeam;
+      const hScore  = parseInt(isHomeH ? sc.home_score : sc.away_score);
+      const aScore  = parseInt(isHomeH ? sc.away_score : sc.home_score);
+      if (!isNaN(hScore) && !isNaN(aScore)) {
+        if (hScore > aScore) homeWins++; else awayWins++;
+      }
+    });
+
+    lines.push("");
+    lines.push(`[상대전적 (${cutoffDate} 기준)]`);
+    lines.push(`• 시즌: ${homeTeam} ${homeWins}승 ${awayWins}패 / ${awayTeam} ${awayWins}승 ${homeWins}패`);
+    lines.push(`• 통산: ${homeTeam} ${allTimeH2H[homeTeam] || "-"} / ${awayTeam} ${allTimeH2H[awayTeam] || "-"}`);
+
+    if (h2hGames.length) {
+      lines.push("");
+      lines.push("[이번 시즌 맞대결 기록]");
+      h2hGames.forEach(g => {
+        const sc = scoreByGameNo[g.game_no];
+        let scorePart = "";
+        if (sc) {
+          const isHomeH = normalizeTeam(sc.home_team) === homeTeam;
+          const hScore = isHomeH ? sc.home_score : sc.away_score;
+          const aScore = isHomeH ? sc.away_score : sc.home_score;
+          const winner = parseInt(hScore) > parseInt(aScore) ? homeTeam : awayTeam;
+          scorePart = ` ${homeTeam} ${hScore}-${aScore} ${awayTeam} → ${winner} 승`;
+        }
+        const mvpPart = g.mvp ? ` | MVP: ${g.mvp}` : "";
+        lines.push(`• ${formatDate(g.date)}${scorePart}${mvpPart}`);
+      });
+    }
+  }
+
+  // 최근 3경기 (이 경기 이전 기준)
+  const buildRecentText = (teamName, label) => {
+    const recent = getRecentGames(teamName, 3, cutoffDate);
+    if (!recent.length) return;
+    lines.push("");
+    lines.push(`[${label} 최근 3경기]`);
+    recent.forEach(g => {
+      const canon = normalizeTeam(teamName);
+      const isHome = normalizeTeam(g.home_team) === canon;
+      const opp    = isHome ? g.away_team : g.home_team;
+      const myScore  = isHome ? g.home_score : g.away_score;
+      const oppScore = isHome ? g.away_score : g.home_score;
+      const result   = parseInt(myScore) > parseInt(oppScore) ? "승" : "패";
+      const loc = isHome ? "(홈)" : "(원정)";
+      lines.push(`• ${formatDate(g.date)} vs ${opp}${loc}: ${myScore}-${oppScore} ${result}${g.mvp ? " | MVP: " + g.mvp : ""}`);
+    });
+  };
+  buildRecentText(homeTeam, homeTeam);
+  buildRecentText(awayTeam, awayTeam);
+
+  // 득점 순위
+  if (playerRecordsData && playerRecordsData["득점"]) {
+    const { headers, rows } = playerRecordsData["득점"];
+    const avgIdx = headers.indexOf("평균득점");
+    const buildPlayerText = (teamName) => {
+      const canon = normalizeTeam(teamName);
+      const players = rows.filter(r => normalizeTeam(r[2]) === canon).slice(0, 5);
+      if (!players.length) return;
+      lines.push("");
+      lines.push(`[${teamName} 득점 순위 TOP5]`);
+      players.forEach(r => {
+        const avg = avgIdx >= 0 ? r[avgIdx] : "-";
+        lines.push(`• ${r[0]}위 ${r[1]} — 평균 ${avg}점`);
+      });
+    };
+    buildPlayerText(homeTeam);
+    buildPlayerText(awayTeam);
+  }
+
+  lines.push("");
+  lines.push("출처: wkbl.or.kr");
+  lines.push("══════════════════════════════════════════");
+  return lines.join("\n");
+}
+
+function buildAIPromptText(game, h2hData) {
+  const homeTeam = normalizeTeam(game.home_team);
+  const awayTeam = normalizeTeam(game.away_team);
+  const dataText = buildBriefingPlainText(game, h2hData);
+
+  return `아래 WKBL 경기 데이터를 바탕으로 TV 해설위원이 실제로 읽을 수 있는 브리핑 스크립트를 한국어로 작성해주세요.
+
+■ 출력 형식 (반드시 이 순서로):
+
+[경기 개요]
+• 일시/장소, 양 팀 현재 순위·성적
+• 특이사항: 이 경기의 리그 순위·우승·플레이오프 진출에 미치는 영향
+
+[이전 라운드 맞대결 복기]
+• 시즌 상대전적 요약
+• 날짜별 스코어와 승패, 경기 흐름 한 줄 코멘트
+
+[양 팀 직전 경기 요약]
+• 각 팀 가장 최근 경기 결과, 주목 선수 컨디션
+
+[승부처 요약]
+• 이 경기의 핵심 매치업·변수 3가지 (선수 이름 명시)
+
+[주요 기록 (Fact)]
+• 주목할 선수 스탯, 팀 지표
+
+[해설 포인트 제안]
+• 오프닝 멘트 (30초 분량 스크립트)
+• 클로징 멘트 (20초 분량 스크립트)
+
+■ 작성 원칙:
+- 데이터는 아래 제공된 WKBL 공식 데이터를 우선 사용
+- 선수명·팀명·스코어는 데이터와 정확히 일치해야 함
+- 해설 포인트는 실제 방송 해설위원이 바로 읽을 수 있는 자연스러운 한국어 구어체로
+
+━━━━━━━━ 경기 데이터 ━━━━━━━━
+
+${dataText}`;
+}
+
+// currentModal 에 저장된 game·h2h 참조
+let _currentModalGame = null;
+let _currentModalH2H  = null;
+
+function copyBriefingText(btn, asAIPrompt) {
+  const text = asAIPrompt
+    ? buildAIPromptText(_currentModalGame, _currentModalH2H)
+    : buildBriefingPlainText(_currentModalGame, _currentModalH2H);
+
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ 복사됨!";
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    const orig = btn.textContent;
+    btn.textContent = "✅ 복사됨!";
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2000);
+  });
 }
 
 // ─── 브리핑 패널 (팀 선택 섹션) ───────────────────────────────────────────────
