@@ -289,6 +289,264 @@ td.team-name { font-weight: 600; text-align: left; }
 td.completed { color: var(--muted); }
 td.game-no-link a { color: var(--accent); }
 
+/* 월 탭 */
+.month-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.month-tab {
+  background: var(--surf2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.month-tab:hover { color: var(--text); border-color: var(--accent); }
+.month-tab.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); font-weight: 700; }
+
+/* 경기 행 */
+tr.game-row:hover td { background: rgba(240,180,41,0.07) !important; }
+tr.upcoming td { color: var(--text); }
+tr.completed td { color: var(--muted); }
+tr.completed .result-cell { color: var(--text); }
+
+tr.section-separator td {
+  padding: 0;
+  height: 4px;
+  background: linear-gradient(to right, transparent, var(--accent)33, transparent);
+  border: none;
+}
+
+.upcoming-badge {
+  background: var(--accent)22;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* ── 모달 ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+
+.modal-backdrop[hidden] { display: none; }
+
+.modal-box {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+  padding: 28px 24px 24px;
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+.modal-close:hover { color: var(--text); }
+
+.modal-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.modal-time-badge {
+  background: var(--accent)22;
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.modal-venue {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modal-matchup {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-team-card {
+  background: var(--surf2);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal-team-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.modal-team-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.modal-team-record {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modal-vs-col {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-vs-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.modal-score {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.modal-mvp {
+  font-size: 11px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.modal-section {
+  margin-bottom: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.modal-h2h-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.modal-h2h-item {
+  background: var(--surf2);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.mh-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.mh-val {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modal-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.modal-recent-col {}
+.modal-recent-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.modal-source {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .modal-matchup { grid-template-columns: 1fr; }
+  .modal-two-col { grid-template-columns: 1fr; }
+  .modal-h2h-row { grid-template-columns: 1fr; }
+  .modal-score   { font-size: 18px; }
+  .modal-vs-col  { flex-direction: row; justify-content: center; }
+}
+
 /* ── 로딩 / 에러 ── */
 .loading {
   color: var(--muted);
