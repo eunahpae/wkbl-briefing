@@ -10,6 +10,13 @@ const TEAM_COLORS = {
   "신한은행":  "#E8192C",
 };
 
+// "87승 99패" → {wins:87, losses:99}
+function parseWinLoss(str) {
+  if (!str) return null;
+  const m = str.match(/(\d+)승\s*(\d+)패/);
+  return m ? { wins: parseInt(m[1]), losses: parseInt(m[2]) } : null;
+}
+
 // 순위표에서 부제 포함 팀명(예: "삼성생명 블루밍스") → 정식 팀명 정규화
 function normalizeTeam(name) {
   if (!name) return name;
@@ -416,7 +423,7 @@ function buildModalContent(game, h2hData) {
     // 이 경기 날짜까지의 맞대결만 필터
     const h2hGames = (h2hData.games || []).filter(g => g.date <= cutoffDate);
 
-    // 시즌 전적을 실제 점수 기반으로 재계산
+    // 시즌 전적: cutoffDate 이하 경기 기반 재계산
     let homeWins = 0, awayWins = 0;
     h2hGames.forEach(g => {
       const sc = scoreByGameNo[g.game_no];
@@ -433,8 +440,32 @@ function buildModalContent(game, h2hData) {
       ? { [homeTeam]: `${homeWins}승 ${awayWins}패`, [awayTeam]: `${awayWins}승 ${homeWins}패` }
       : { [homeTeam]: "-", [awayTeam]: "-" };
 
+    // 통산 전적: 현재값에서 cutoffDate 이후 경기 수 빼서 역산
+    const postGames = (h2hData.games || []).filter(g => g.date > cutoffDate);
+    let postHomeWins = 0, postAwayWins = 0;
+    postGames.forEach(g => {
+      const sc = scoreByGameNo[g.game_no];
+      if (!sc) return;
+      const isHomeH = normalizeTeam(sc.home_team) === homeTeam;
+      const hScore  = parseInt(isHomeH ? sc.home_score : sc.away_score);
+      const aScore  = parseInt(isHomeH ? sc.away_score : sc.home_score);
+      if (!isNaN(hScore) && !isNaN(aScore)) {
+        if (hScore > aScore) postHomeWins++; else postAwayWins++;
+      }
+    });
+    const homeAllTime = parseWinLoss(allTimeH2H[homeTeam]);
+    const awayAllTime = parseWinLoss(allTimeH2H[awayTeam]);
+    let adjustedAllTimeH = "-", adjustedAllTimeA = "-";
+    if (homeAllTime) {
+      adjustedAllTimeH = `${homeAllTime.wins - postHomeWins}승 ${homeAllTime.losses - postAwayWins}패`;
+      adjustedAllTimeA = `${homeAllTime.losses - postAwayWins - (homeAllTime.losses - postAwayWins - (homeAllTime.losses - postAwayWins))}승 ${homeAllTime.wins - postHomeWins}패`;
+    }
+    if (awayAllTime) {
+      adjustedAllTimeA = `${awayAllTime.wins - postAwayWins}승 ${awayAllTime.losses - postHomeWins}패`;
+    }
+
     html += `<div class="modal-section">
-      <div class="modal-section-title">상대전적${cutoffDate ? ` (${cutoffDate} 기준)` : ""}</div>
+      <div class="modal-section-title">상대전적 (${cutoffDate} 기준)</div>
       <div class="modal-h2h-row">
         <div class="modal-h2h-item">
           <div class="mh-label">시즌 상대전적</div>
@@ -447,9 +478,9 @@ function buildModalContent(game, h2hData) {
         <div class="modal-h2h-item">
           <div class="mh-label">통산 상대전적</div>
           <div class="mh-val">
-            <span style="color:${colorH}">${escHtml(allTimeH2H[homeTeam] || "-")}</span>
+            <span style="color:${colorH}">${escHtml(adjustedAllTimeH)}</span>
             <span style="color:var(--muted)"> / </span>
-            <span style="color:${colorA}">${escHtml(allTimeH2H[awayTeam] || "-")}</span>
+            <span style="color:${colorA}">${escHtml(adjustedAllTimeA)}</span>
           </div>
         </div>
       </div>
