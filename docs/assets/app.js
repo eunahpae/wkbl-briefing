@@ -313,8 +313,10 @@ async function openGameModal(game) {
   modal.removeAttribute("hidden");
   document.body.style.overflow = "hidden";
 
-  // H2H 데이터 fetch
-  const [t1, t2] = [game.home_team, game.away_team].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  // H2H 데이터 fetch (정식 팀명으로 정규화)
+  const homeCanon = normalizeTeam(game.home_team);
+  const awayCanon = normalizeTeam(game.away_team);
+  const [t1, t2] = [homeCanon, awayCanon].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   const filename = `${t1}_vs_${t2}.json`;
   let h2hData = null;
   try {
@@ -549,6 +551,10 @@ function buildModalContent(game, h2hData) {
 
 // ─── 브리핑 패널 (팀 선택 섹션) ───────────────────────────────────────────────
 async function showBriefing(teamA, teamB) {
+  // 부제 포함 팀명("삼성생명 블루밍스" 등) → 정식명 정규화
+  teamA = normalizeTeam(teamA);
+  teamB = normalizeTeam(teamB);
+
   const panel = document.getElementById("briefing-panel");
   panel.classList.remove("visible");
   panel.innerHTML = '<p class="loading">브리핑 데이터를 불러오는 중...</p>';
