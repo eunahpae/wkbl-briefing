@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-28T10:23:26+09:00",
+  "updated": "2026-03-29T11:38:25+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -1181,27 +1181,29 @@
       "date": "2026-03-28",
       "home_team": "하나은행",
       "away_team": "BNK 썸",
-      "home_score": "",
-      "away_score": "",
+      "home_score": "67",
+      "away_score": "63",
       "venue": "부천체육관",
       "time": "14:00",
       "broadcast": "",
-      "game_no": "",
+      "game_no": "85",
       "ym": "202603",
-      "is_completed": false
+      "is_completed": true,
+      "mvp": "박혜진(BNK 썸)"
     },
     {
       "date": "2026-03-28",
       "home_team": "우리은행",
       "away_team": "신한은행",
-      "home_score": "",
-      "away_score": "",
+      "home_score": "61",
+      "away_score": "63",
       "venue": "아산이순신체육관",
       "time": "16:00",
       "broadcast": "",
-      "game_no": "",
+      "game_no": "86",
       "ym": "202603",
-      "is_completed": false
+      "is_completed": true,
+      "mvp": "김단비(우리은행 우리WON)"
     },
     {
       "date": "2026-03-29",
