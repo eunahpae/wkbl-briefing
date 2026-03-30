@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-29T11:38:25+09:00",
+  "updated": "2026-03-30T11:41:15+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -1209,14 +1209,15 @@
       "date": "2026-03-29",
       "home_team": "하나은행",
       "away_team": "삼성생명",
-      "home_score": "",
-      "away_score": "",
+      "home_score": "75",
+      "away_score": "58",
       "venue": "부천체육관",
       "time": "16:00",
       "broadcast": "",
-      "game_no": "",
+      "game_no": "87",
       "ym": "202603",
-      "is_completed": false
+      "is_completed": true,
+      "mvp": "이이지마 사키(하나은행)"
     },
     {
       "date": "2026-03-30",
