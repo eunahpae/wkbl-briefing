@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-30T11:41:15+09:00",
+  "updated": "2026-03-31T11:35:40+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -1223,14 +1223,15 @@
       "date": "2026-03-30",
       "home_team": "BNK 썸",
       "away_team": "KB스타즈",
-      "home_score": "",
-      "away_score": "",
+      "home_score": "69",
+      "away_score": "94",
       "venue": "부산사직실내체육관",
       "time": "19:00",
       "broadcast": "",
-      "game_no": "",
+      "game_no": "88",
       "ym": "202603",
-      "is_completed": false
+      "is_completed": true,
+      "mvp": "박지수(KB스타즈)"
     },
     {
       "date": "2026-04-01",
