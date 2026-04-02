@@ -1,5 +1,5 @@
 {
-  "updated": "2026-04-01T11:47:33+09:00",
+  "updated": "2026-04-02T11:32:09+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -1237,14 +1237,15 @@
       "date": "2026-04-01",
       "home_team": "신한은행",
       "away_team": "하나은행",
-      "home_score": "",
-      "away_score": "",
+      "home_score": "77",
+      "away_score": "53",
       "venue": "인천도원체육관",
       "time": "19:00",
       "broadcast": "",
-      "game_no": "",
+      "game_no": "89",
       "ym": "202604",
-      "is_completed": false
+      "is_completed": true,
+      "mvp": "김지영(신한은행 에스버드)"
     },
     {
       "date": "2026-04-03",
