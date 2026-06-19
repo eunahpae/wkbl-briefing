@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18T13:10:26+09:00",
+  "updated": "2026-06-19T13:35:29+09:00",
   "games": [
     {
       "date": "2025-11-16",
@@ -357,13 +357,12 @@
       "away_team": "삼성생명",
       "home_score": "66",
       "away_score": "55",
-      "venue": "청주체육관",
-      "time": "19:01",
+      "venue": "",
+      "time": "",
       "broadcast": "",
       "game_no": "26",
       "ym": "202512",
-      "is_completed": true,
-      "mvp": "허예은(KB스타즈)"
+      "is_completed": true
     },
     {
       "date": "2025-12-17",
